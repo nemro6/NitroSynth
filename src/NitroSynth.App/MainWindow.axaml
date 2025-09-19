@@ -34,8 +34,13 @@
                 <ComboBox ItemsSource="{Binding SoundBanks}"
                           SelectedItem="{Binding SelectedSoundBank}"
                           IsEnabled="{Binding HasSoundBanks}"
-                          DisplayMemberPath="DisplayName"
-                          MinWidth="240" />
+                          MinWidth="240">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <TextBlock Text="{Binding SelectedSoundBankDescription}" TextWrapping="Wrap" />
             </StackPanel>
         </Border>
