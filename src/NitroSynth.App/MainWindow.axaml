@@ -29,6 +29,14 @@
                 <TextBlock Text="現在の状態:" FontWeight="Bold" />
                 <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding LoadedFilePath, TargetNullValue=''}" TextWrapping="Wrap" />
+                <Separator />
+                <TextBlock Text="SBNK バンク" FontWeight="Bold" />
+                <ComboBox ItemsSource="{Binding SoundBanks}"
+                          SelectedItem="{Binding SelectedSoundBank}"
+                          IsEnabled="{Binding HasSoundBanks}"
+                          DisplayMemberPath="DisplayName"
+                          MinWidth="240" />
+                <TextBlock Text="{Binding SelectedSoundBankDescription}" TextWrapping="Wrap" />
             </StackPanel>
         </Border>
     </DockPanel>
