@@ -66,15 +66,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
         catch (Exception ex)
         {
             UpdateSoundBanks(Array.Empty<SoundBankSummary>());
-            var lengthText = stream.CanSeek
-                ? $" ({stream.Length:N0} バイト)"
-                : string.Empty;
-
-            LoadedFilePath = file.Path?.LocalPath ?? file.Name;
-            StatusMessage = $"読み込み完了: {file.Name}{lengthText}";
-        }
-        catch (Exception ex)
-        {
             LoadedFilePath = file.Path?.LocalPath ?? file.Name;
             StatusMessage = $"読み込みに失敗しました: {ex.Message}";
         }
@@ -101,11 +92,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
         if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
-    private void SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value))
-        {
-            return;
         }
 
         field = value;
