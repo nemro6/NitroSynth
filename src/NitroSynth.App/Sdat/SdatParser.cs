@@ -112,7 +112,8 @@ public static class SdatParser
         var blockEnd = blockStart + blockSize;
 
         stream.Seek(blockStart + 8, SeekOrigin.Begin);
-        _ = reader.ReadUInt32(); // sequence table offset
+        _ = reader.ReadUInt32(); // sequence name table offset
+        _ = reader.ReadUInt32(); // sequence archive name table offset
         var bankTableOffset = reader.ReadUInt32();
 
         if (bankTableOffset == 0)
