@@ -10,6 +10,7 @@ namespace NitroSynth.App.Sdat;
 public static class SdatParser
 {
     private const int InfoTableCount = 8;
+    private const int BankInfoTableIndex = 2;
 
     public static async Task<SdatArchive> ParseAsync(Stream stream, CancellationToken cancellationToken = default)
     {
@@ -181,12 +182,12 @@ public static class SdatParser
             tableOffsets.Add(reader.ReadUInt32());
         }
 
-        if (tableOffsets.Count <= 1)
+        if (tableOffsets.Count <= BankInfoTableIndex)
         {
             return results;
         }
 
-        var bankTableOffset = tableOffsets[1];
+        var bankTableOffset = tableOffsets[BankInfoTableIndex];
         if (bankTableOffset == 0)
         {
             return results;
@@ -219,7 +220,7 @@ public static class SdatParser
                 continue;
             }
 
-            var entryPosition = bankTableBase + relativeOffset;
+            var entryPosition = blockStart + relativeOffset;
             if (entryPosition < blockStart || entryPosition + 4 > blockEnd)
             {
                 continue;
