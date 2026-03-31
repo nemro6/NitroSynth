@@ -1,0 +1,75 @@
+﻿<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ie="clr-namespace:NitroSynth.App.InstrumentEditor"
+    x:Class="NitroSynth.App.InstrumentEditor.SWAVEditor"
+    Width="760"
+    Height="460"
+    MinWidth="760"
+    MinHeight="460"
+    Title="{Binding Title}"
+    x:CompileBindings="False">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+    <Style Selector="CheckBox.previewLoop /template/ Border">
+      <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+      <TextBlock Classes="editorTitle" Text="SWAV Editor"/>
+
+      <Grid Grid.Row="1"
+            Margin="0,10,0,10"
+            RowDefinitions="Auto,Auto,Auto,Auto"
+            ColumnDefinitions="Auto,6,*,16,Auto,6,*">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="SWAR"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SwarIdText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="4" Text="SWAV"/>
+        <TextBox Grid.Row="0" Grid.Column="6" Text="{Binding SwavIdText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Encoding"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding EncodingText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="4" Text="Sample Rate"/>
+        <TextBox Grid.Row="1" Grid.Column="6" Text="{Binding SampleRateText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Samples"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SampleCountText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="4" Text="Duration"/>
+        <TextBox Grid.Row="2" Grid.Column="6" Text="{Binding DurationText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Loop Range"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding LoopRangeText}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="4" Text="Playhead"/>
+        <TextBox Grid.Row="3" Grid.Column="6" Text="{Binding PlayheadText}" IsReadOnly="True"/>
+      </Grid>
+
+      <Border Grid.Row="2"
+              BorderBrush="{DynamicResource Editor.BorderBrush}"
+              BorderThickness="1"
+              CornerRadius="0"
+              Padding="0">
+        <ie:SwavWaveformView x:Name="WaveformView"/>
+      </Border>
+
+      <Grid Grid.Row="3"
+            Margin="0,12,0,0"
+            ColumnDefinitions="Auto,8,Auto,16,Auto,*,Auto">
+        <Button Grid.Column="0" Content="Play" MinWidth="96" Click="OnPlayClicked"/>
+        <Button Grid.Column="2" Content="Stop" MinWidth="96" Click="OnStopClicked"/>
+        <CheckBox Grid.Column="4"
+                  Classes="previewLoop"
+                  Content="Loop"
+                  IsChecked="{Binding LoopPlayback, Mode=TwoWay}"/>
+        <Button Grid.Column="6" Content="Close" MinWidth="96" Click="OnCloseClicked"/>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
+

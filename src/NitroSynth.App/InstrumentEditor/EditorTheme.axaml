@@ -1,0 +1,106 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="Editor.WindowBgBrush" Color="#222222"/>
+          <SolidColorBrush x:Key="Editor.SurfaceBgBrush" Color="#222222"/>
+          <SolidColorBrush x:Key="Editor.BorderBrush" Color="#222222"/>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="Editor.WindowBgBrush" Color="#DDDDDD"/>
+          <SolidColorBrush x:Key="Editor.SurfaceBgBrush" Color="#DDDDDD"/>
+          <SolidColorBrush x:Key="Editor.BorderBrush" Color="#DDDDDD"/>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource Editor.WindowBgBrush}"/>
+  </Style>
+
+  <Style Selector="Border.editorRoot">
+    <Setter Property="Background" Value="{DynamicResource Editor.SurfaceBgBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Editor.BorderBrush}"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="Padding" Value="16"/>
+  </Style>
+
+  <Style Selector="TextBlock">
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="VerticalAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="TextBlock.editorTitle">
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+  </Style>
+
+  <Style Selector="TextBox">
+    <Setter Property="Height" Value="24"/>
+    <Setter Property="MinHeight" Value="24"/>
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="ComboBox">
+    <Setter Property="Height" Value="24"/>
+    <Setter Property="MinHeight" Value="24"/>
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="Padding" Value="8,0,28,0"/>
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="NumericUpDown">
+    <Setter Property="Height" Value="24"/>
+    <Setter Property="MinHeight" Value="24"/>
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+  </Style>
+
+  <Style Selector="NumericUpDown /template/ TextBox">
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="Button">
+    <Setter Property="Height" Value="24"/>
+    <Setter Property="MinHeight" Value="24"/>
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="DataGrid">
+    <Setter Property="FontFamily" Value="Consolas"/>
+    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="RowHeight" Value="24"/>
+    <Setter Property="ColumnHeaderHeight" Value="24"/>
+    <Setter Property="GridLinesVisibility" Value="All"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Editor.BorderBrush}"/>
+    <Setter Property="Background" Value="{DynamicResource Editor.SurfaceBgBrush}"/>
+  </Style>
+
+  <Style Selector="DataGridColumnHeader">
+    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="6,0"/>
+    <Setter Property="Background" Value="Transparent"/>
+  </Style>
+
+  <Style Selector="DataGridCell">
+    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+</Styles>

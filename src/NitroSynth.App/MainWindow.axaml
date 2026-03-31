@@ -3,46 +3,2331 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NitroSynth.App.ViewModels"
+        xmlns:ctrl="clr-namespace:NitroSynth.App.Controls"
+        xmlns:conv="clr-namespace:NitroSynth.App.ViewModels"
         mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
         x:Class="NitroSynth.App.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+        Width="1000"
+        Height="524"
+        MinWidth="1000"
+        MaxWidth="1000"
+        MinHeight="524"
+        MaxHeight="524"
+        CanResize="False"
+        Background="{DynamicResource App.WindowBgBrush}"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        ExtendClientAreaTitleBarHeightHint="32"
         Title="NitroSynth">
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
 
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_ファイル">
-                <MenuItem Header="_開く..." Click="OnOpenSdatClicked" />
-            </MenuItem>
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+
+        <ResourceDictionary x:Key="Dark">
+
+          <Color x:Key="App.Color.WindowBg">#222222</Color>
+          <Color x:Key="App.Color.SurfaceBg">#222222</Color>
+          <Color x:Key="App.Color.ControlBg">#222222</Color>
+          <Color x:Key="App.Color.HeaderBg">#222222</Color>
+          <Color x:Key="App.Color.Line">#222222</Color>
+
+          <SolidColorBrush x:Key="App.WindowBgBrush"  Color="{StaticResource App.Color.WindowBg}"/>
+          <SolidColorBrush x:Key="App.SurfaceBgBrush" Color="{StaticResource App.Color.SurfaceBg}"/>
+          <SolidColorBrush x:Key="App.ControlBgBrush" Color="{StaticResource App.Color.ControlBg}"/>
+          <SolidColorBrush x:Key="App.HeaderBgBrush"  Color="{StaticResource App.Color.HeaderBg}"/>
+          <SolidColorBrush x:Key="App.LineBrush"      Color="{StaticResource App.Color.Line}"/>
+
+          <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{StaticResource App.Color.SurfaceBg}"/>
+          <SolidColorBrush x:Key="ThemeBorderLowBrush"  Color="{StaticResource App.Color.Line}"/>
+
+          <SolidColorBrush x:Key="StatusBarBackgroundBrush">#2F2F2F</SolidColorBrush>
+          <SolidColorBrush x:Key="StatusBarForegroundBrush">#E6E6E6</SolidColorBrush>
+
+          <SolidColorBrush x:Key="PianoRoll.Background" Color="{StaticResource App.Color.WindowBg}"/>
+          <SolidColorBrush x:Key="PianoRoll.BlackKey">#5A5A5A</SolidColorBrush>
+
+          <SolidColorBrush x:Key="MasterMeterBgBrush">#333333</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterLowBrush">#32CD32</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterMidBrush">#FFD700</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterHighBrush">#FF3333</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterPeakBrush">#DDDDDD</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterBorderBrush">#333333</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterClipBorderBrush">#FF3333</SolidColorBrush>
+
+          <SolidColorBrush x:Key="Mixer.Toggle.BorderBrush">#8A8A8A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.BackgroundBrush">#1A1A1A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.CoreOffBrush">#313131</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.CoreOnBrush">#FFFFFF</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledBorderBrush">#5A5A5A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledBackgroundBrush">#1C1C1C</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledCoreBrush">#2A2A2A</SolidColorBrush>
+
+          <SolidColorBrush x:Key="Mixer.Knob.OuterBorderBrush">#8A8A8A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.OuterBackgroundBrush">#2A2A2A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.RingTrackBrush">#3A3A3A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.RingValueBrush">#47D447</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.InnerBorderBrush">#444444</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.InnerBackgroundBrush">#1E1E1E</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.NeedleBrush">#F2F2F2</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.CenterDotBrush">#E8E8E8</SolidColorBrush>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+          <Color x:Key="App.Color.WindowBg">#DDDDDD</Color>
+          <Color x:Key="App.Color.SurfaceBg">#DDDDDD</Color>
+          <Color x:Key="App.Color.ControlBg">#DDDDDD</Color>
+          <Color x:Key="App.Color.HeaderBg">#DDDDDD</Color>
+          <Color x:Key="App.Color.Line">#DDDDDD</Color>
+
+          <SolidColorBrush x:Key="App.WindowBgBrush"  Color="{StaticResource App.Color.WindowBg}"/>
+          <SolidColorBrush x:Key="App.SurfaceBgBrush" Color="{StaticResource App.Color.SurfaceBg}"/>
+          <SolidColorBrush x:Key="App.ControlBgBrush" Color="{StaticResource App.Color.ControlBg}"/>
+          <SolidColorBrush x:Key="App.HeaderBgBrush"  Color="{StaticResource App.Color.HeaderBg}"/>
+          <SolidColorBrush x:Key="App.LineBrush"      Color="{StaticResource App.Color.Line}"/>
+
+          <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{StaticResource App.Color.SurfaceBg}"/>
+          <SolidColorBrush x:Key="ThemeBorderLowBrush"  Color="{StaticResource App.Color.Line}"/>
+
+          <SolidColorBrush x:Key="StatusBarBackgroundBrush">#CFCFCF</SolidColorBrush>
+          <SolidColorBrush x:Key="StatusBarForegroundBrush">#2E2E2E</SolidColorBrush>
+
+          <SolidColorBrush x:Key="PianoRoll.Background" Color="{StaticResource App.Color.WindowBg}"/>
+          <SolidColorBrush x:Key="PianoRoll.BlackKey">#8E8E8E</SolidColorBrush>
+
+          <SolidColorBrush x:Key="MasterMeterBgBrush">#EEEEEE</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterLowBrush">#32CD32</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterMidBrush">#FFD700</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterHighBrush">#FF3333</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterPeakBrush">#555555</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterBorderBrush">#EEEEEE</SolidColorBrush>
+          <SolidColorBrush x:Key="MasterMeterClipBorderBrush">#FF3333</SolidColorBrush>
+
+          <SolidColorBrush x:Key="Mixer.Toggle.BorderBrush">#BEBEBE</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.BackgroundBrush">#ECECEC</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.CoreOffBrush">#D9D9D9</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.CoreOnBrush">#595959</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledBorderBrush">#CECECE</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledBackgroundBrush">#F4F4F4</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Toggle.DisabledCoreBrush">#E8E8E8</SolidColorBrush>
+
+          <SolidColorBrush x:Key="Mixer.Knob.OuterBorderBrush">#BEBEBE</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.OuterBackgroundBrush">#ECECEC</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.RingTrackBrush">#CACACA</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.RingValueBrush">#7ABF7A</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.InnerBorderBrush">#C8C8C8</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.InnerBackgroundBrush">#F6F6F6</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.NeedleBrush">#6E6E6E</SolidColorBrush>
+          <SolidColorBrush x:Key="Mixer.Knob.CenterDotBrush">#A6A6A6</SolidColorBrush>
+        </ResourceDictionary>
+
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <Window.Styles>
+    <Style Selector="ctrl|MasterLevelMeter">
+      <Setter Property="MeterBackgroundBrush" Value="{DynamicResource MasterMeterBgBrush}"/>
+      <Setter Property="LowBrush"            Value="{DynamicResource MasterMeterLowBrush}"/>
+      <Setter Property="MidBrush"            Value="{DynamicResource MasterMeterMidBrush}"/>
+      <Setter Property="HighBrush"           Value="{DynamicResource MasterMeterHighBrush}"/>
+      <Setter Property="PeakBrush"           Value="{DynamicResource MasterMeterPeakBrush}"/>
+      <Setter Property="MeterBorderBrush"    Value="{DynamicResource MasterMeterBorderBrush}"/>
+      <Setter Property="ClipBorderBrush"     Value="{DynamicResource MasterMeterClipBorderBrush}"/>
+    </Style>
+
+    <Style Selector="Slider.smallThumb /template/ Thumb">
+      <Setter Property="Width" Value="12"/>
+      <Setter Property="Height" Value="12"/>
+      <Setter Property="MinWidth" Value="12"/>
+      <Setter Property="MinHeight" Value="12"/>
+    </Style>
+  </Window.Styles>
+  
+  <Design.DataContext>
+    <vm:MainWindowViewModel />
+  </Design.DataContext>
+
+  <Grid RowDefinitions="32,*,Auto,Auto" Background="{DynamicResource App.WindowBgBrush}">
+
+    <Border Grid.Row="0"
+            Background="{DynamicResource App.WindowBgBrush}"
+            Padding="8,0,0,0">
+      <DockPanel LastChildFill="True">
+
+        <Menu DockPanel.Dock="Left"
+              Background="Transparent"
+              FontFamily="Consolas"
+                     FontSize="11"
+              Height="24"
+              VerticalAlignment="Stretch">
+          <MenuItem Header="_File">
+            <MenuItem Header="_Open..." Click="OnOpenSdatClicked" />
+            <Separator/>
+            <MenuItem Header="SDAT _info..." Click="OnOpenSdatInfoClicked" />
+          </MenuItem>
         </Menu>
 
-        <Border Padding="16">
-            <StackPanel Spacing="8">
-                <TextBlock Text="NitroSynth" FontSize="20" FontWeight="SemiBold" />
-                <TextBlock Text="Nintendo DS向けNitro Sound Archive (.sdat) を読み込むには、上部メニューの『ファイル → 開く』を選択してください。"
-                           TextWrapping="Wrap" />
-                <Separator />
-                <TextBlock Text="現在の状態:" FontWeight="Bold" />
-                <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding LoadedFilePath, TargetNullValue=''}" TextWrapping="Wrap" />
-                <Separator />
-                <TextBlock Text="SBNK バンク" FontWeight="Bold" />
-                <ComboBox ItemsSource="{Binding SoundBanks}"
-                          SelectedItem="{Binding SelectedSoundBank}"
-                          IsEnabled="{Binding HasSoundBanks}"
-                          MinWidth="240">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DisplayName}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <TextBlock Text="{Binding SelectedSoundBankDescription}" TextWrapping="Wrap" />
-            </StackPanel>
+        <Border Background="Transparent"
+                PointerPressed="OnTitleBarPointerPressed">
+          <TextBlock VerticalAlignment="Center"
+                     HorizontalAlignment="Center"
+                     FontFamily="Consolas"
+                     FontSize="11"
+                     Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Border>
-    </DockPanel>
+      </DockPanel>
+    </Border>
+
+    <TabControl x:Name="MainTabs"
+                Grid.Row="1" Grid.Column="0"
+                Background="{DynamicResource App.SurfaceBgBrush}"
+                Margin="0,0,0,0">
+      <TabControl.Styles>
+        <Style Selector="TabItem">
+          <Setter Property="HeaderTemplate">
+            <DataTemplate>
+              <TextBlock Text="{Binding}"
+                         FontSize="14"/>
+            </DataTemplate>
+          </Setter>
+        </Style>
+      </TabControl.Styles>
+
+      <TabItem Header="MIXER">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="TextBlock.mono">
+              <Setter Property="FontFamily" Value="Consolas"/>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerStripToggle">
+              <Setter Property="FontSize" Value="9"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="Width" Value="12"/>
+              <Setter Property="Height" Value="12"/>
+              <Setter Property="MinWidth"  Value="12"/>
+              <Setter Property="MinHeight" Value="12"/>
+              <Setter Property="MaxWidth"  Value="12"/>
+              <Setter Property="MaxHeight" Value="12"/>
+              <Setter Property="Padding"   Value="0"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource Mixer.Toggle.BorderBrush}"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="Template">
+                <ControlTemplate>
+                  <Border x:Name="TrackToggleBox"
+                          Width="12"
+                          Height="12"
+                          BorderThickness="1"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          Background="{DynamicResource Mixer.Toggle.BackgroundBrush}"
+                          BoxShadow="0 0 0 0 #00000000"
+                          CornerRadius="0">
+                    <Grid>
+                      <Border x:Name="TrackToggleCore"
+                              Margin="2"
+                              Background="{DynamicResource Mixer.Toggle.CoreOffBrush}"
+                              CornerRadius="0"/>
+                      <ContentPresenter HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+              </Setter>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerStripToggle /template/ ContentPresenter">
+              <Setter Property="Foreground" Value="#E6E6E6"/>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerStripToggle.trackOutput:checked /template/ Border#TrackToggleCore">
+              <Setter Property="Background" Value="{DynamicResource Mixer.Toggle.CoreOnBrush}"/>
+            </Style>
+
+            <Style Selector="ToggleSwitch.mixerPlayerLimit">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="9"/>
+              <Setter Property="Width" Value="44"/>
+              <Setter Property="MinWidth" Value="44"/>
+              <Setter Property="Height" Value="32"/>
+              <Setter Property="MinHeight" Value="32"/>
+              <Setter Property="MaxHeight" Value="32"/>
+              <Setter Property="HorizontalAlignment" Value="Left"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="ComboBox.mixerPlayer">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="10"/>
+              <Setter Property="Width" Value="220"/>
+              <Setter Property="Height" Value="22"/>
+              <Setter Property="MinHeight" Value="22"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="6,0,0,0"/>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerChannelGateLed">
+              <Setter Property="Width" Value="12"/>
+              <Setter Property="Height" Value="12"/>
+              <Setter Property="MinWidth" Value="12"/>
+              <Setter Property="MinHeight" Value="12"/>
+              <Setter Property="MaxWidth" Value="12"/>
+              <Setter Property="MaxHeight" Value="12"/>
+              <Setter Property="Padding" Value="0"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource Mixer.Toggle.BorderBrush}"/>
+              <Setter Property="HorizontalAlignment" Value="Center"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+              <Setter Property="Template">
+                <ControlTemplate>
+                  <Border x:Name="LedBox"
+                          Width="12"
+                          Height="12"
+                          BorderThickness="1"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          Background="{DynamicResource Mixer.Toggle.BackgroundBrush}"
+                          BoxShadow="0 0 0 0 #00000000"
+                          CornerRadius="0">
+                    <Border x:Name="LedCore"
+                            Margin="2"
+                            Background="{DynamicResource Mixer.Toggle.CoreOffBrush}"
+                            CornerRadius="0"/>
+                  </Border>
+                </ControlTemplate>
+              </Setter>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerChannelGateLed:checked /template/ Border#LedCore">
+              <Setter Property="Background" Value="{DynamicResource Mixer.Toggle.CoreOnBrush}"/>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerChannelGateLed:disabled /template/ Border#LedBox">
+              <Setter Property="BorderBrush" Value="{DynamicResource Mixer.Toggle.DisabledBorderBrush}"/>
+              <Setter Property="Background" Value="{DynamicResource Mixer.Toggle.DisabledBackgroundBrush}"/>
+            </Style>
+
+            <Style Selector="ToggleButton.mixerChannelGateLed:disabled /template/ Border#LedCore">
+              <Setter Property="Background" Value="{DynamicResource Mixer.Toggle.DisabledCoreBrush}"/>
+            </Style>
+
+            <Style Selector="Border.miniTrack">
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource MeterBorderBrush}"/>
+              <Setter Property="Background" Value="{DynamicResource MasterMeterBgBrush}"/>
+            </Style>
+
+            <Style Selector="Border.miniFill">
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Background" Value="{DynamicResource MeterFillBrush}"/>
+            </Style>
+
+            <Style Selector="Border.miniPulse">
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Background" Value="{DynamicResource MeterPulseBrush}"/>
+              <Setter Property="Opacity" Value="0.90"/>
+            </Style>
+            <Style Selector="TextBlock.hdr">
+              <Setter Property="FontSize" Value="10"/>
+              <Setter Property="FontWeight" Value="SemiBold"/>
+              <Setter Property="Opacity" Value="0.75"/>
+            </Style>
+
+            <Style Selector="Border.mixerMainKnob">
+              <Setter Property="Width" Value="22"/>
+              <Setter Property="Height" Value="22"/>
+              <Setter Property="MinWidth" Value="22"/>
+              <Setter Property="MinHeight" Value="22"/>
+              <Setter Property="CornerRadius" Value="11"/>
+              <Setter Property="BorderThickness" Value="0"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource Mixer.Knob.OuterBorderBrush}"/>
+              <Setter Property="Background" Value="{DynamicResource Mixer.Knob.OuterBackgroundBrush}"/>
+            </Style>
+
+            <Style Selector="TextBox.mixerMainKnobValue">
+              <Setter Property="Width" Value="40"/>
+              <Setter Property="Height" Value="22"/>
+              <Setter Property="MinHeight" Value="22"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="10"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="Padding" Value="0"/>
+            </Style>
+          </Border.Styles>
+          <Grid RowDefinitions="Auto,*,Auto">
+
+            <Border Grid.Row="0"
+                Padding="0,0,0,0"
+                BorderThickness="0,0,0,0"
+                BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                Background="{DynamicResource ThemeBackgroundBrush}">
+              <StackPanel Spacing="0">
+              <Grid ColumnSpacing="4"
+                    ColumnDefinitions="32,32,32,32,32,105,48,48,48,48,30,30,30,48,30,48,48,108,*">
+                <TextBlock Grid.Column="0" Classes="hdr" Text="TrNo."/>
+                <TextBlock Grid.Column="1" Classes="hdr" Text="Prg" TextAlignment="Center"/>
+                <TextBlock Grid.Column="2" Classes="hdr" Text="On" TextAlignment="Center"/>
+                <TextBlock Grid.Column="3" Classes="hdr" Text="Ch" TextAlignment="Center"/>
+                <TextBlock Grid.Column="4" Classes="hdr" Text="Note" TextAlignment="Center"/>
+                <TextBlock Grid.Column="5" Classes="hdr" Text="Loudness" TextAlignment="Left"/>
+                <TextBlock Grid.Column="6" Classes="hdr" Text="Vol" TextAlignment="Left"/>
+                <TextBlock Grid.Column="7" Classes="hdr" Text="Vol2" TextAlignment="Left"/>
+                <TextBlock Grid.Column="8" Classes="hdr" Text="Velo" TextAlignment="Left"/>
+                <TextBlock Grid.Column="9" Classes="hdr" Text="Pan" TextAlignment="Left"/>
+                <TextBlock Grid.Column="10" Classes="hdr" Text="mS" TextAlignment="Left"/>
+                <TextBlock Grid.Column="11" Classes="hdr" Text="mR" TextAlignment="Left"/>
+                <TextBlock Grid.Column="12" Classes="hdr" Text="mD" TextAlignment="Left"/>
+                <TextBlock Grid.Column="13" Classes="hdr" Text="Mod" TextAlignment="Left"/>
+                <TextBlock Grid.Column="14" Classes="hdr" Text="bR" TextAlignment="Left"/>
+                <TextBlock Grid.Column="15" Classes="hdr" Text="Bend" TextAlignment="Left"/>
+                <TextBlock Grid.Column="16" Classes="hdr" Text="Porta" TextAlignment="Left"/>
+                <TextBlock Grid.Column="17" Classes="hdr" Text="Instrument type" TextAlignment="Left"/>
+                <TextBlock Grid.Column="18" Classes="hdr" Text="Log" TextAlignment="Left"/>
+              </Grid>
+               <Rectangle Height="1"
+                  Fill="{DynamicResource MasterMeterBorderBrush}"
+                  Opacity="0.8"/>
+              </StackPanel>
+            </Border>
+          <Border Grid.Row="2"
+                  Padding="0,4,0,0"
+                  Background="{DynamicResource ThemeBackgroundBrush}">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+              <StackPanel Grid.Column="0"
+                          Orientation="Vertical"
+                          Spacing="4"
+                          VerticalAlignment="Bottom"
+                          Margin="0,0,24,8">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center"
+                            Height="22">
+                  <TextBlock Text="SBNK"
+                             Width="40"
+                             FontSize="10"
+                             VerticalAlignment="Center"/>
+                  <ComboBox Classes="mixerPlayer"
+                            ItemsSource="{Binding BankOptions}"
+                            SelectedItem="{Binding SelectedBank, Mode=TwoWay}"
+                            DisplayMemberBinding="{Binding Display}"/>
+                  <TextBlock Text="mVol"
+                             FontSize="10"
+                             VerticalAlignment="Center"/>
+                  <Border Classes="mixerMainKnob"
+                          VerticalAlignment="Center"
+                          PointerPressed="OnMixerMainVolumeKnobPointerPressed"
+                          PointerMoved="OnMixerMainVolumeKnobPointerMoved"
+                          PointerReleased="OnMixerMainVolumeKnobPointerReleased"
+                          PointerCaptureLost="OnMixerMainVolumeKnobPointerCaptureLost"
+                          PointerWheelChanged="OnMixerMainVolumeKnobPointerWheelChanged"
+                          ToolTip.Tip="SSEQ MainVolume (CC12): Drag up/down or mouse wheel">
+                    <Grid ClipToBounds="True">
+                      <Border Margin="1"
+                              CornerRadius="10"
+                              BorderThickness="1"
+                              BorderBrush="{DynamicResource Mixer.Knob.OuterBorderBrush}"
+                              Background="{DynamicResource Mixer.Knob.OuterBackgroundBrush}"/>
+                      <Path Data="M 4.636,17.364 A 9,9 0 1 1 17.364,17.364"
+                            Stroke="{DynamicResource Mixer.Knob.RingTrackBrush}"
+                            StrokeThickness="2"
+                            StrokeLineCap="Round"/>
+                      <Path Data="{Binding SelectedSseqVolumeArcPathData}"
+                            IsVisible="{Binding SelectedSseqVolumeHasArc}"
+                            Stroke="{DynamicResource Mixer.Knob.RingValueBrush}"
+                            StrokeThickness="2"
+                            StrokeLineCap="Round"/>
+                      <Border Margin="5"
+                              CornerRadius="6"
+                              BorderThickness="1"
+                              BorderBrush="{DynamicResource Mixer.Knob.InnerBorderBrush}"
+                              Background="{DynamicResource Mixer.Knob.InnerBackgroundBrush}"/>
+                      <Path Data="{Binding SelectedSseqVolumeNeedlePathData}"
+                            Stroke="{DynamicResource Mixer.Knob.NeedleBrush}"
+                            StrokeThickness="1.8"
+                            StrokeLineCap="Round"/>
+                      <Border Width="3"
+                              Height="3"
+                              CornerRadius="1.5"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Background="{DynamicResource Mixer.Knob.CenterDotBrush}"/>
+                    </Grid>
+                  </Border>
+                  <TextBox Classes="mixerMainKnobValue"
+                           Text="{Binding SelectedSseqVolume, Mode=TwoWay}"
+                           ToolTip.Tip="SSEQ MainVolume (0-127)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center"
+                            Height="22">
+                  <TextBlock Text="Player"
+                             Width="40"
+                             FontSize="10"
+                             VerticalAlignment="Center"/>
+                  <ComboBox Classes="mixerPlayer"
+                            ItemsSource="{Binding SeqPlayers}"
+                            SelectedItem="{Binding SelectedMixerPlayer, Mode=TwoWay}"
+                            IsEnabled="{Binding IsMixerPlayerChannelLimitEnabled}"
+                            DisplayMemberBinding="{Binding Display}"/>
+                  <ToggleSwitch Classes="mixerPlayerLimit"
+                                IsChecked="{Binding IsMixerPlayerChannelLimitEnabled, Mode=TwoWay}"
+                                VerticalAlignment="Center"/>
+                </StackPanel>
+              </StackPanel>
+
+              <StackPanel Grid.Column="1"
+                          Margin="-100,0,0,0"
+                          Spacing="0"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Spacing="-4">
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[0]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[1]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[2]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[3]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[4]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[5]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[6]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[7]}"/>
+                  </Border>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Spacing="-4" Margin="0,-6,0,0">
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[8]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[9]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[10]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[11]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[12]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[13]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[14]}"/>
+                  </Border>
+                  <Border Width="48" Padding="2,2" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                    <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding MixerChannelSlotTexts[15]}"/>
+                  </Border>
+                </StackPanel>
+              </StackPanel>
+
+              <StackPanel Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="-120,2,8,0"
+                          Orientation="Horizontal"
+                          Spacing="6"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top">
+                <TextBlock Classes="mono"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           Text="Engine"/>
+                <ItemsControl ClipToBounds="False"
+                              ItemsSource="{Binding MixerChannelGates}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Horizontal" Spacing="-2"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Grid Width="34"
+                            Height="16"
+                            ColumnDefinitions="16,4,12"
+                            Opacity="{Binding UiOpacity}">
+                        <TextBlock Classes="mono"
+                                   Grid.Column="0"
+                                   FontSize="10"
+                                   LineHeight="10"
+                                   TextAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Label}"/>
+                        <ToggleButton Classes="mixerChannelGateLed"
+                                      Grid.Column="2"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding IsChannelEnabled, Mode=TwoWay}"
+                                      BorderBrush="{Binding ToggleBorderBrush}"
+                                      IsEnabled="{Binding IsPlayerAvailable}"
+                                      Tag="{Binding IsAudibleActive}"
+                                      PointerPressed="OnMixerChannelGatePointerPressed"
+                                      ToolTip.Tip="{Binding Label}"/>
+                      </Grid>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2"
+                          Spacing="0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Bottom">
+                <Grid ColumnDefinitions="Auto,8,Auto">
+                  <TextBlock Grid.Column="0"
+                             Classes="mono"
+                             FontSize="10"
+                             VerticalAlignment="Center"
+                             Text="Note "/>
+                  <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="-2">
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerNotePcmText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerNotePsgText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerNoteNoiseText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerNoteTotalText}"/>
+                    </Border>
+                  </StackPanel>
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,8,Auto"
+                      Margin="0,-6,0,0">
+                  <TextBlock Grid.Column="0"
+                             Classes="mono"
+                             FontSize="10"
+                             VerticalAlignment="Center"
+                             Text="Voice"/>
+                  <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="-2">
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerVoicePcmText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerVoicePsgText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerVoiceNoiseText}"/>
+                    </Border>
+                    <Border Padding="6,2"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+                      <TextBlock Classes="mono"
+                                 FontSize="10"
+                                 HorizontalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding MixerVoiceTotalText}"/>
+                    </Border>
+                  </StackPanel>
+                </Grid>
+              </StackPanel>
+            </Grid>
+          </Border>
+          <Border Grid.Row="1"
+                  Background="{DynamicResource ThemeBackgroundBrush}">
+            <ItemsControl ItemsSource="{Binding MixerStrips}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Vertical" Spacing="0"/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Spacing="0">
+                  <Border Padding="2"
+                          CornerRadius="3"
+                          BorderThickness="0"
+                          Margin="0,0,0,0"
+                          BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                          Background="{DynamicResource ThemeBackgroundBrush}">
+
+                    <Grid ColumnSpacing="4"
+                          ColumnDefinitions="32,32,32,32,32,105,48,48,48,48,30,30,30,48,30,48,48,108,*">
+
+                      <Grid Grid.Column="0" ColumnDefinitions="1,*" ColumnSpacing="4">
+                        <Border Grid.Column="0"
+                                Background="{Binding ChannelBrush}"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ChannelLabel}"/>
+                      </Grid>
+
+                      <TextBlock Grid.Column="1" Classes="mono" Text="{Binding ProgramId}" TextAlignment="Center"/>
+
+                      <ToggleButton Classes="mixerStripToggle trackOutput"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding OutputEnabled, Mode=TwoWay}"
+                                    BorderBrush="{Binding OutputToggleBorderBrush}"
+                                    Tag="{Binding OutputAudibleActive}"
+                                    PointerPressed="OnMixerStripOutputTogglePointerPressed"/>
+                      <TextBlock Grid.Column="3"
+                                 Classes="mono"
+                                 Text="{Binding OutputChannelDisplay}"
+                                 TextAlignment="Center"/>
+
+                      <TextBlock Grid.Column="4" Classes="mono" Text="{Binding ActiveNoteDisplay}" TextAlignment="Center"/>
+
+                      <ctrl:MasterLevelMeter Grid.Column="5"
+                                             Height="16"
+                                             Level="{Binding MeterLevel}"
+                                             Peak="{Binding MeterPeak}"
+                                             IsClipped="{Binding MeterClip}"/>
+
+                      <Grid Grid.Column="6" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding VolumeMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding VolumeRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding Volume}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="7" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding Volume2MeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding Volume2Ratio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding Volume2}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="8" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding VelocityMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding VelocityRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding Velocity}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="9" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Grid ColumnDefinitions="*,*" ClipToBounds="True">
+                          <Border Grid.Column="0" Classes="miniFill"
+                                  Background="{Binding PanMeterBrush}"
+                                  HorizontalAlignment="Right"
+                                  Width="{Binding PanNegWidth}"/>
+                          <Border Grid.Column="1" Classes="miniFill"
+                                  Background="{Binding PanMeterBrush}"
+                                  HorizontalAlignment="Left"
+                                  Width="{Binding PanPosWidth}"/>
+                        </Grid>
+
+                        <TextBlock Classes="mono" Text="{Binding Pan}"
+                                   FontSize="10" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="10" Width="30" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding ModSpeedMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding ModSpeedRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding ModSpeed}"
+                                   FontSize="8" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="11" Width="30" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding ModRangeMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding ModRangeRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding ModRange}"
+                                   FontSize="8" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="12" Width="30" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding ModDelayMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding ModDelayRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding ModDelay}"
+                                   FontSize="7" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="13" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+
+                        <Border Classes="miniFill"
+                                Background="{Binding ModulationMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding ModulationRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,*" Height="2" VerticalAlignment="Bottom" ClipToBounds="True">
+                          <Border Grid.Column="0"
+                                  Classes="miniPulse"
+                                  Background="{Binding ModulationPulseBrush}"
+                                  HorizontalAlignment="Right"
+                                  Width="{Binding ModSwingNegWidth}"/>
+                          <Border Grid.Column="1"
+                                  Classes="miniPulse"
+                                  Background="{Binding ModulationPulseBrush}"
+                                  HorizontalAlignment="Left"
+                                  Width="{Binding ModSwingPosWidth}"/>
+                        </Grid>
+
+                        <TextBlock Classes="mono" Text="{Binding Modulation}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="14" Width="30" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding BendRangeMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding BendRangeRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <TextBlock Classes="mono" Text="{Binding BendRange}"
+                                   FontSize="8" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="15" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Grid ColumnDefinitions="*,*" ClipToBounds="True">
+                          <Border Grid.Column="0" Classes="miniFill"
+                                  Background="{Binding PitchBendMeterBrush}"
+                                  HorizontalAlignment="Right"
+                                  Width="{Binding PitchBendNegWidth}"/>
+                          <Border Grid.Column="1" Classes="miniFill"
+                                  Background="{Binding PitchBendMeterBrush}"
+                                  HorizontalAlignment="Left"
+                                  Width="{Binding PitchBendPosWidth}"/>
+                        </Grid>
+
+                        <TextBlock Classes="mono" Text="{Binding PitchBend}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <Grid Grid.Column="16" Width="48" Height="16" ClipToBounds="True">
+                        <Border Classes="miniTrack"/>
+                        <Border Classes="miniFill"
+                                Background="{Binding PortaMeterBrush}"
+                                RenderTransformOrigin="0,0.5">
+                          <Border.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding PortamentoRatio}"/>
+                          </Border.RenderTransform>
+                        </Border>
+                        <Grid ColumnDefinitions="*,*" Height="2" VerticalAlignment="Bottom" ClipToBounds="True">
+                          <Border Grid.Column="0" Classes="miniPulse"
+                                  Background="{Binding PortaPulseBrush}"
+                                  HorizontalAlignment="Right"
+                                  Width="{Binding PortaSwingNegWidth}"/>
+                          <Border Grid.Column="1" Classes="miniPulse"
+                                  Background="{Binding PortaPulseBrush}"
+                                  HorizontalAlignment="Left"
+                                  Width="{Binding PortaSwingPosWidth}"/>
+                        </Grid>
+                        <TextBlock Classes="mono" Text="{Binding Portamento}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                      </Grid>
+
+                      <TextBlock Grid.Column="17"
+                                 Text="{Binding InstrumentType}"
+                                 TextWrapping="NoWrap"
+                                 TextTrimming="CharacterEllipsis"/>
+                      <TextBlock Grid.Column="18"
+                                 Classes="mono"
+                                 FontSize="9"
+                                 Text="{Binding IssueLog}"
+                                 TextWrapping="NoWrap"
+                                 TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                  </Border>
+                  <Rectangle Height="1"
+                             Fill="{DynamicResource MasterMeterBorderBrush}"
+                             IsVisible="{Binding IsLastTrack}"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Border>
+          </Grid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SDAT">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+            <Style Selector="TreeView">
+              <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
+              <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+            <Style Selector="TreeViewItem">
+              <Setter Property="IsExpanded"
+                      Value="{ReflectionBinding DataContext.IsExpanded, RelativeSource={RelativeSource Self}, Mode=TwoWay}"/>
+            </Style>
+          </Border.Styles>
+
+          <Grid RowDefinitions="Auto,*" RowSpacing="6">
+            <TextBlock Text="SDAT"/>
+
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+              <TreeView ItemsSource="{Binding SdatTreeRoots}"
+                        DoubleTapped="OnSdatTreeDoubleTapped">
+                <TreeView.ItemTemplate>
+                  <TreeDataTemplate x:DataType="vm:SdatTreeNode"
+                                    ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Text}">
+                      <TextBlock.ContextMenu>
+                        <ContextMenu FontFamily="Consolas"
+                                     FontSize="11">
+                          <ContextMenu.Styles>
+                            <Style Selector="MenuItem">
+                              <Setter Property="MinHeight" Value="24"/>
+                              <Setter Property="Height" Value="24"/>
+                            </Style>
+                          </ContextMenu.Styles>
+                          <MenuItem Header="Add new"
+                                    Click="OnSdatTreeAddNewClicked"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsRealFileEntry}"/>
+                          <MenuItem Header="Rename"
+                                    Click="OnSdatTreeRenameClicked"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsRealFileEntry}"/>
+                          <MenuItem Header="Replace"
+                                    Click="OnSdatTreeReplaceClicked"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsRealFileEntry}"/>
+                          <MenuItem Header="Export"
+                                    Click="OnSdatTreeExportClicked"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsRealFileEntry}"/>
+                          <MenuItem Header="Deleat"
+                                    Click="OnSdatTreeDeleatClicked"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsRealFileEntry}"/>
+                        </ContextMenu>
+                      </TextBlock.ContextMenu>
+                    </TextBlock>
+                  </TreeDataTemplate>
+                </TreeView.ItemTemplate>
+              </TreeView>
+            </ScrollViewer>
+          </Grid>
+        </Border>
+      </TabItem>
+
+
+      <TabItem Header="SSEQ">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="ComboBox">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="TextBlock.sseqLabel">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="Opacity" Value="0.85"/>
+            </Style>
+
+            <Style Selector="ComboBox.sseqWide">
+              <Setter Property="Width" Value="220"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="ComboBox.sseqMid">
+              <Setter Property="Width" Value="174"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="TextBox.sseqValue">
+              <Setter Property="Width" Value="56"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <Style Selector="Button.sseqAction">
+              <Setter Property="Width" Value="72"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+          </Border.Styles>
+
+          <Border.Resources>
+            <DataTemplate x:Key="SseqTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SseqBankTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SseqPlayerTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+          </Border.Resources>
+
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,Auto,8,Auto,*"
+                  RowDefinitions="Auto">
+              <StackPanel Grid.Column="0" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="SSEQ"/>
+                <ComboBox Classes="sseqWide"
+                          ItemsSource="{Binding SseqOptions}"
+                          SelectedItem="{Binding SelectedSseq, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SseqTemplate}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="SBNK"/>
+                <ComboBox Classes="sseqMid"
+                          ItemsSource="{Binding BankOptions}"
+                          SelectedItem="{Binding SelectedSseqBank, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SseqBankTemplate}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="4" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="Volume"/>
+                <TextBox Classes="sseqValue"
+                         Text="{Binding SelectedSseqVolume}"
+                         IsReadOnly="True"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="6" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="Channel Priority"/>
+                <TextBox Classes="sseqValue"
+                         Text="{Binding SelectedSseqChannelPriority}"
+                         IsReadOnly="True"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="8" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="Player Priority"/>
+                <TextBox Classes="sseqValue"
+                         Text="{Binding SelectedSseqPlayerPriority}"
+                         IsReadOnly="True"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="10" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sseqLabel" Text="Player"/>
+                <ComboBox Classes="sseqMid"
+                          ItemsSource="{Binding SseqPlayerOptions}"
+                          SelectedItem="{Binding SelectedSseqPlayer, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SseqPlayerTemplate}"/>
+              </StackPanel>
+            </Grid>
+
+            <Separator Grid.Row="1" Margin="0,8,0,0"/>
+
+            <TextBox Grid.Row="2"
+                     Text="{Binding SseqDecompilerText, Mode=TwoWay}"
+                     AcceptsReturn="True"
+                     TextWrapping="NoWrap"
+                     IsUndoEnabled="True"
+                     FontFamily="Consolas"
+                     FontSize="11"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+
+            <Grid Grid.Row="3"
+                  Margin="0,8,0,0"
+                  ColumnDefinitions="Auto,*,Auto">
+              <StackPanel Grid.Column="0"
+                          Orientation="Horizontal"
+                          Spacing="8">
+                <Button Classes="sseqAction"
+                        Content="PLAY"
+                        Click="OnSseqPlayClicked"
+                        IsEnabled="{Binding CanPlaySseq}"/>
+                <Button Classes="sseqAction"
+                        Content="{Binding SseqPauseButtonText}"
+                        Click="OnSseqPauseClicked"
+                        IsEnabled="{Binding CanPauseSseq}"/>
+                <Button Classes="sseqAction"
+                        Content="STOP"
+                        Click="OnSseqStopClicked"
+                        IsEnabled="{Binding CanStopSseq}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2"
+                          Orientation="Horizontal"
+                          Spacing="8"
+                          HorizontalAlignment="Right">
+                <Button Classes="sseqAction"
+                        Content="HEX"
+                        Click="OnSseqHexClicked"/>
+                <Border Width="1"
+                        Height="18"
+                        VerticalAlignment="Center"
+                        Background="#7C7C7C"/>
+                <Button Classes="sseqAction"
+                        Content="REPLACE"
+                        Click="OnSseqImportClicked"/>
+                <Button Classes="sseqAction"
+                        Content="EXPORT"
+                        Click="OnSseqExportClicked"/>
+                <Button Classes="sseqAction"
+                        Content="SAVE"
+                        Click="OnSseqSaveClicked"/>
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SeqPlayer">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+          </Border.Styles>
+
+          <DataGrid x:Name="SeqPlayerGrid"
+                    ItemsSource="{Binding SeqPlayers}"
+                    AutoGenerateColumns="False"
+                    GridLinesVisibility="All"
+                    CanUserSortColumns="False"
+                    DoubleTapped="OnSeqPlayerDoubleTapped"
+                    FontFamily="Consolas"
+                    FontSize="11"
+                    RowHeight="22"
+                    ColumnHeaderHeight="22">
+            <DataGrid.Styles>
+              <Style Selector="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+              </Style>
+              <Style Selector="DataGridCell">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+              </Style>
+              <Style Selector="DataGridColumnHeadersPresenter">
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+              <Style Selector="DataGridColumnHeader">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Height" Value="22"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="6,0"/>
+              </Style>
+            </DataGrid.Styles>
+
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="No." Width="70" Binding="{Binding No}"/>
+              <DataGridTextColumn Header="Label" Width="340" Binding="{Binding Label}"/>
+              <DataGridTextColumn Header="SeqMax" Width="90" Binding="{Binding MaxSequences}"/>
+              <DataGridTextColumn Header="HeapSize" Width="100" Binding="{Binding HeapSize}"/>
+              <DataGridTextColumn Header="ChannelBitFlags" Width="160" Binding="{Binding ChannelBitflagsHex}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="STRM">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+          </Border.Styles>
+
+          <DataGrid x:Name="StrmGrid"
+                    ItemsSource="{Binding Strms}"
+                    SelectedItem="{Binding SelectedStrm, Mode=TwoWay}"
+                    AutoGenerateColumns="False"
+                    GridLinesVisibility="All"
+                    CanUserSortColumns="False"
+                    FontFamily="Consolas"
+                    FontSize="11"
+                    RowHeight="22"
+                    ColumnHeaderHeight="22">
+            <DataGrid.Styles>
+              <Style Selector="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+              </Style>
+              <Style Selector="DataGridCell">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+              </Style>
+              <Style Selector="DataGridColumnHeadersPresenter">
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+              <Style Selector="DataGridColumnHeader">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Height" Value="22"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="6,0"/>
+              </Style>
+            </DataGrid.Styles>
+
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="No." Width="70" Binding="{Binding No}"/>
+              <DataGridTextColumn Header="Label" Width="260" Binding="{Binding Label}"/>
+              <DataGridTextColumn Header="FileId" Width="90" Binding="{Binding FileId}"/>
+              <DataGridTextColumn Header="Volume" Width="80" Binding="{Binding Volume}"/>
+              <DataGridTextColumn Header="Priority" Width="80" Binding="{Binding Priority}"/>
+              <DataGridTextColumn Header="Player" Width="210" Binding="{Binding PlayerLabel}"/>
+              <DataGridTextColumn Header="AutoStereo" Width="96" Binding="{Binding AutoStereo}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SSAR">
+        <Border Padding="0">
+          <Border.Styles>
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="ComboBox">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="TextBlock.ssarLabel">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="Opacity" Value="0.85"/>
+            </Style>
+
+            <Style Selector="ComboBox.small">
+              <Setter Property="Width" Value="220"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="TextBox.ssarCount">
+              <Setter Property="Width" Value="56"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <Style Selector="Button.ssarAction">
+              <Setter Property="Width" Value="72"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+          </Border.Styles>
+
+          <Border.Resources>
+            <x:Double x:Key="Ssar.SeqGridFontSize">8</x:Double>
+            <x:Double x:Key="Ssar.SeqGridRowHeight">18</x:Double>
+            <x:Double x:Key="Ssar.SeqGridHeaderHeight">18</x:Double>
+
+            <DataTemplate x:Key="SsarTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+          </Border.Resources>
+
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,8,Auto,*" RowDefinitions="Auto">
+              <StackPanel Grid.Column="0" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="ssarLabel" Text="SSAR"/>
+                <ComboBox Classes="small"
+                          ItemsSource="{Binding SsarOptions}"
+                          SelectedItem="{Binding SelectedSsar, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SsarTemplate}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="ssarLabel" Text="Count"/>
+                <TextBox Classes="ssarCount"
+                         Text="{Binding SsarSequences.Count}"
+                         IsReadOnly="True"/>
+              </StackPanel>
+            </Grid>
+
+            <Separator Grid.Row="1" Margin="0,8,0,0"/>
+
+            <DataGrid Grid.Row="2"
+                      x:Name="SsarSequenceGrid"
+                      ItemsSource="{Binding SsarSequences}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      CanUserSortColumns="False"
+                      DoubleTapped="OnSsarSequenceDoubleTapped"
+                      FontFamily="Consolas"
+                      FontSize="{DynamicResource Ssar.SeqGridFontSize}"
+                      RowHeight="{DynamicResource Ssar.SeqGridRowHeight}"
+                      ColumnHeaderHeight="{DynamicResource Ssar.SeqGridHeaderHeight}">
+              <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader">
+                  <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+                <Style Selector="DataGridCell">
+                  <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+                <Style Selector="DataGridColumnHeadersPresenter">
+                  <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style Selector="DataGridColumnHeader">
+                  <Setter Property="Background" Value="Transparent"/>
+                  <Setter Property="Height" Value="{DynamicResource Ssar.SeqGridHeaderHeight}"/>
+                  <Setter Property="VerticalAlignment" Value="Stretch"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  <Setter Property="Padding" Value="6,0"/>
+                </Style>
+                <Style Selector="DataGridRow">
+                  <Setter Property="ContextMenu">
+                    <ContextMenu FontFamily="Consolas"
+                                 FontSize="11">
+                      <ContextMenu.Styles>
+                        <Style Selector="MenuItem">
+                          <Setter Property="MinHeight" Value="24"/>
+                          <Setter Property="Height" Value="24"/>
+                        </Style>
+                      </ContextMenu.Styles>
+                      <MenuItem Header="Add new"
+                                Click="OnSsarSequenceAddNewClicked"
+                                CommandParameter="{Binding}"/>
+                      <MenuItem Header="Rename"
+                                Click="OnSsarSequenceRenameClicked"
+                                CommandParameter="{Binding}"/>
+                      <MenuItem Header="Replace"
+                                Click="OnSsarSequenceReplaceClicked"
+                                CommandParameter="{Binding}"/>
+                      <MenuItem Header="Export"
+                                Click="OnSsarSequenceExportClicked"
+                                CommandParameter="{Binding}"/>
+                      <MenuItem Header="Deleat"
+                                Click="OnSsarSequenceDeleatClicked"
+                                CommandParameter="{Binding}"/>
+                    </ContextMenu>
+                  </Setter>
+                </Style>
+              </DataGrid.Styles>
+
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="seqID" Width="86" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Name" Width="260" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Offset" Width="100" Binding="{Binding Offset}"/>
+                <DataGridTextColumn Header="sbnkID" Width="86" Binding="{Binding SbnkId}"/>
+                <DataGridTextColumn Header="Vol" Width="64" Binding="{Binding Volume}"/>
+                <DataGridTextColumn Header="ChPrio" Width="86" Binding="{Binding ChannelPriority}"/>
+                <DataGridTextColumn Header="PlPrio" Width="86" Binding="{Binding PlayerPriority}"/>
+                <DataGridTextColumn Header="Player" Width="86" Binding="{Binding PlayerId}"/>
+              </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="3"
+                  Margin="0,8,0,0"
+                  ColumnDefinitions="*,Auto">
+              <StackPanel Grid.Column="1"
+                          Orientation="Horizontal"
+                          Spacing="8"
+                          HorizontalAlignment="Right">
+                <Button Classes="ssarAction"
+                        Content="MUS"
+                        Click="OnSsarMusClicked"/>
+                <Button Classes="ssarAction"
+                        Content="HEX"
+                        Click="OnSsarHexClicked"/>
+                <Border Width="1"
+                        Height="18"
+                        VerticalAlignment="Center"
+                        Background="#7C7C7C"/>
+                <Button Classes="ssarAction"
+                        Content="REPLACE"
+                        Click="OnSsarImportClicked"/>
+                <Button Classes="ssarAction"
+                        Content="EXPORT"
+                        Click="OnSsarExportClicked"/>
+                <Button Classes="ssarAction"
+                        Content="SAVE"
+                        Click="OnSsarSaveClicked"/>
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SBNK">
+
+
+        <Border Padding="0">
+          
+          <Border.Styles>
+
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="ComboBox">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="NumericUpDown">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="TextBlock.sbnkLabel">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="Opacity" Value="0.85"/>
+            </Style>
+
+            <Style Selector="ComboBox.small">
+              <Setter Property="Width" Value="174"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="TextBox.sbnkCount">
+              <Setter Property="Width" Value="40"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <Style Selector="ComboBox.small /template/ ContentPresenter">
+              <Setter Property="VerticalAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style Selector="ComboBox.small /template/ ContentPresenter TextBlock">
+              <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="ComboBoxItem">
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="Button.sbnkAction">
+              <Setter Property="Width" Value="72"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            
+          </Border.Styles>
+
+          <Border.Resources>
+            <x:Double x:Key="Sbnk.InstGridFontSize">8</x:Double>
+            <x:Double x:Key="Sbnk.InstGridRowHeight">18</x:Double>
+            <x:Double x:Key="Sbnk.InstGridHeaderHeight">18</x:Double>
+            <x:Double x:Key="Sbnk.InstGridEditorHeight">18</x:Double>
+            <Thickness x:Key="Sbnk.InstGridEditorPadding">0,0</Thickness>
+            
+            <DataTemplate x:Key="BankTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SwarTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+          </Border.Resources>
+
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,4,Auto,0,*" RowDefinitions="Auto">
+
+              <StackPanel Grid.Column="0" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sbnkLabel" Text="SBNK"/>
+                <ComboBox Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding BankOptions}"
+                          SelectedItem="{Binding SelectedBank, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource BankTemplate}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="sbnkLabel" Text="Count"/>
+                <TextBox Classes="sbnkCount" Text="{Binding SbnkInstrumentCountText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="0-32767"/>
+              </StackPanel>
+
+              <Border Grid.Column="1"/>
+
+              <Grid Grid.Column="4"
+                    RowDefinitions="Auto,Auto"
+                    ColumnDefinitions="Auto,4,Auto,4,Auto,4,Auto"
+                    HorizontalAlignment="Right">
+                <TextBlock Classes="sbnkLabel" Grid.Row="0" Grid.Column="0" Text="SWAR 0" HorizontalAlignment="Left"/>
+                <TextBlock Classes="sbnkLabel" Grid.Row="0" Grid.Column="2" Text="SWAR 1" HorizontalAlignment="Left"/>
+                <TextBlock Classes="sbnkLabel" Grid.Row="0" Grid.Column="4" Text="SWAR 2" HorizontalAlignment="Left"/>
+                <TextBlock Classes="sbnkLabel" Grid.Row="0" Grid.Column="6" Text="SWAR 3" HorizontalAlignment="Left"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="0"
+                          Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding SwarOptions}"
+                          SelectedItem="{Binding SelectedSwar0, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SwarTemplate}"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="2"
+                          Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding SwarOptions}"
+                          SelectedItem="{Binding SelectedSwar1, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SwarTemplate}"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="4"
+                          Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding SwarOptions}"
+                          SelectedItem="{Binding SelectedSwar2, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SwarTemplate}"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="6"
+                          Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding SwarOptions}"
+                          SelectedItem="{Binding SelectedSwar3, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SwarTemplate}"/>
+              </Grid>
+            </Grid>
+
+            <Separator Grid.Row="1" Margin="0,8,0,0"/>
+
+            <Grid Grid.Row="2">
+
+              <DataGrid x:Name="InstGrid"
+          ItemsSource="{Binding Insts}"
+          SelectedItem="{Binding SelectedInst, Mode=TwoWay}"
+          AutoGenerateColumns="False"
+          GridLinesVisibility="All"
+          CanUserSortColumns="False"
+          DoubleTapped="OnInstDoubleTapped"
+          FontFamily="Consolas"
+          FontSize="{DynamicResource Sbnk.InstGridFontSize}"
+          RowHeight="{DynamicResource Sbnk.InstGridRowHeight}"
+          ColumnHeaderHeight="{DynamicResource Sbnk.InstGridHeaderHeight}">
+
+                <DataGrid.Styles>
+                  <Style Selector="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  </Style>
+                  <Style Selector="DataGridCell">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  </Style>
+
+                  <Style Selector="TextBox.instEdit">
+                    <Setter Property="Height" Value="{DynamicResource Sbnk.InstGridEditorHeight}"/>
+                    <Setter Property="MinHeight" Value="{DynamicResource Sbnk.InstGridEditorHeight}"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="{DynamicResource Sbnk.InstGridEditorPadding}"/>
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontSize" Value="{DynamicResource Sbnk.InstGridFontSize}"/>
+                    <Setter Property="CornerRadius" Value="0"/>
+                  </Style>
+
+                  <Style Selector="ComboBox.instEdit">
+                    <Setter Property="Height" Value="{DynamicResource Sbnk.InstGridEditorHeight}"/>
+                    <Setter Property="MinHeight" Value="{DynamicResource Sbnk.InstGridEditorHeight}"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="8,0,28,0"/>
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontSize" Value="{DynamicResource Sbnk.InstGridFontSize}"/>
+                    <Setter Property="CornerRadius" Value="0"/>
+                  </Style>
+
+                  <Style Selector="DataGridColumnHeadersPresenter">
+                    <Setter Property="Background" Value="Transparent"/>
+                  </Style>
+
+                  <Style Selector="DataGridColumnHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Height" Value="{DynamicResource Sbnk.InstGridHeaderHeight}"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="6,0"/>
+                  </Style>
+
+                </DataGrid.Styles>
+
+                <DataGrid.Columns>
+
+                  <DataGridTextColumn Header="Prg" Width="64"
+                                      Binding="{Binding ProgramNo, Mode=TwoWay}" />
+
+                  <DataGridTemplateColumn Header="Type" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding TypeLabel}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <ComboBox Classes="instEdit"
+                                  ItemsSource="{Binding TypeOptions}"
+                                  SelectedIndex="{Binding SelectedType, Mode=TwoWay}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="swavID" Width="86">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding SwavIdText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <Grid>
+                          <ComboBox Classes="instEdit"
+                                    ItemsSource="{Binding DutyOptions}"
+                                    SelectedIndex="{Binding DutyIndex, Mode=TwoWay}"
+                                    IsVisible="{Binding IsPsg}"/>
+
+                          <TextBox Classes="instEdit"
+                                   Text="{Binding SwavIdValue, Mode=TwoWay}"
+                                   IsEnabled="{Binding IsSingleEditable}"
+                                   IsVisible="{Binding IsNonPsg}"/>
+                        </Grid>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="swarID" Width="86">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding SwarIdText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding SwarIdValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"
+                                 IsVisible="{Binding IsNonPsg}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="Key" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding BaseKeyText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding BaseKeyValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="A" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding AttackText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding AttackValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="D" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding DecayText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding DecayValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="S" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding SustainText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding SustainValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="R" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding ReleaseText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding ReleaseValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="Pan" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding PanText}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                      <DataTemplate>
+                        <TextBox Classes="instEdit"
+                                 Text="{Binding PanValue, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsSingleEditable}"/>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                  </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+              </DataGrid>
+            </Grid>
+
+            <Grid Grid.Row="3"
+                  Margin="0,8,0,0"
+                  ColumnDefinitions="*,Auto">
+              <StackPanel Grid.Column="1"
+                          Orientation="Horizontal"
+                          Spacing="8"
+                          HorizontalAlignment="Right">
+                <Button Classes="sbnkAction"
+                        Content="BNK"
+                        Click="OnSbnkBnkClicked"/>
+                <Button Classes="sbnkAction"
+                        Content="HEX"
+                        Click="OnSbnkHexClicked"/>
+                <Border Width="1"
+                        Height="18"
+                        VerticalAlignment="Center"
+                        Background="#7C7C7C"/>
+                <Button Classes="sbnkAction"
+                        Content="REPLACE"
+                        Click="OnSbnkImportClicked"/>
+                <Button Classes="sbnkAction"
+                        Content="EXPORT"
+                        Click="OnSbnkExportClicked"/>
+                <Button Classes="sbnkAction"
+                        Content="SAVE"
+                        Click="OnSbnkSaveClicked"/>
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SWAR">
+        <Border Padding="0">
+          <Border.Styles>
+
+            <Style Selector="TextBlock">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="ComboBox">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="TextBlock.swarLabel">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="Opacity" Value="0.85"/>
+            </Style>
+
+            <Style Selector="ComboBox.small">
+              <Setter Property="Width" Value="174"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="TextBox.swarCount">
+              <Setter Property="Width" Value="40"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <Style Selector="CheckBox.loadFlag">
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="Width" Value="16"/>
+              <Setter Property="Height" Value="16"/>
+              <Setter Property="MinWidth" Value="16"/>
+              <Setter Property="MinHeight" Value="16"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="CheckBox.loadFlag /template/ Border">
+              <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <Style Selector="Button.swarAction">
+              <Setter Property="Width" Value="72"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+          </Border.Styles>
+
+          <Border.Resources>
+            <x:Double x:Key="Swar.SwavGridFontSize">8</x:Double>
+            <x:Double x:Key="Swar.SwavGridRowHeight">18</x:Double>
+            <x:Double x:Key="Swar.SwavGridHeaderHeight">18</x:Double>
+
+            <DataTemplate x:Key="SwarTabTemplate">
+              <TextBlock Text="{Binding}"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+          </Border.Resources>
+
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,4,Auto,0,*" RowDefinitions="Auto">
+              <StackPanel Grid.Column="0" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="swarLabel" Text="SWAR"/>
+                <ComboBox Classes="small"
+                          FontFamily="Consolas"
+                          FontSize="11"
+                          ItemsSource="{Binding SwarOptions}"
+                          SelectedItem="{Binding SelectedSwar, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource SwarTabTemplate}"/>
+              </StackPanel>
+
+              <StackPanel Grid.Column="2" Spacing="0" VerticalAlignment="Top">
+                <TextBlock Classes="swarLabel" Text="Count"/>
+                <TextBox Classes="swarCount"
+                         Text="{Binding SelectedSwarSwavCount}"
+                         IsReadOnly="True"/>
+              </StackPanel>
+
+              <Border Grid.Column="1"/>
+
+              <StackPanel Grid.Column="4"
+                          Orientation="Horizontal"
+                          Spacing="6"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center">
+                <TextBlock Classes="swarLabel"
+                           Text="Load Individually"
+                           HorizontalAlignment="Left"/>
+                <CheckBox Classes="loadFlag"
+                          IsEnabled="False"
+                          IsChecked="{Binding SelectedSwarLoadIndividually}"/>
+              </StackPanel>
+            </Grid>
+
+            <Separator Grid.Row="1" Margin="0,8,0,0"/>
+
+            <DataGrid Grid.Row="2"
+                      x:Name="SwavGrid"
+                      ItemsSource="{Binding Swavs}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      CanUserSortColumns="False"
+                      DoubleTapped="OnSwavDoubleTapped"
+                      FontFamily="Consolas"
+                      FontSize="{DynamicResource Swar.SwavGridFontSize}"
+                      RowHeight="{DynamicResource Swar.SwavGridRowHeight}"
+                      ColumnHeaderHeight="{DynamicResource Swar.SwavGridHeaderHeight}">
+              <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader">
+                  <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+                <Style Selector="DataGridCell">
+                  <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+                <Style Selector="DataGridColumnHeadersPresenter">
+                  <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style Selector="DataGridColumnHeader">
+                  <Setter Property="Background" Value="Transparent"/>
+                  <Setter Property="Height" Value="{DynamicResource Swar.SwavGridHeaderHeight}"/>
+                  <Setter Property="VerticalAlignment" Value="Stretch"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  <Setter Property="Padding" Value="6,0"/>
+                </Style>
+              </DataGrid.Styles>
+
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="swavID" Width="86" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Encoding" Width="120" Binding="{Binding Encoding}"/>
+                <DataGridTextColumn Header="Loop" Width="80" Binding="{Binding Loop}"/>
+                <DataGridTextColumn Header="Rate" Width="96" Binding="{Binding SampleRate}"/>
+                <DataGridTextColumn Header="LoopStart" Width="96" Binding="{Binding LoopStart}"/>
+                <DataGridTextColumn Header="LoopEnd" Width="96" Binding="{Binding LoopEnd}"/>
+                <DataGridTextColumn Header="Samples" Width="96" Binding="{Binding SampleCount}"/>
+                <DataGridTextColumn Header="Size" Width="96" Binding="{Binding SizeBytes}"/>
+              </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="3"
+                  Margin="0,8,0,0"
+                  ColumnDefinitions="*,Auto">
+              <StackPanel Grid.Column="1"
+                          Orientation="Horizontal"
+                          Spacing="8"
+                          HorizontalAlignment="Right">
+                <Button Classes="swarAction"
+                        Content="HEX"
+                        Click="OnSwarHexClicked"/>
+                <Border Width="1"
+                        Height="18"
+                        VerticalAlignment="Center"
+                        Background="#7C7C7C"/>
+                <Button Classes="swarAction"
+                        Content="REPLACE"
+                        Click="OnSwarImportClicked"/>
+                <Button Classes="swarAction"
+                        Content="EXPORT"
+                        Click="OnSwarExportClicked"/>
+                <Button Classes="swarAction"
+                        Content="SAVE"
+                        Click="OnSwarSaveClicked"/>
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="SETTING">
+        <Border Padding="0">
+          <Border.Styles>
+            
+           <Style Selector="TextBlock">
+             <Setter Property="FontFamily" Value="Consolas"/>
+             <Setter Property="FontSize" Value="11"/>
+           </Style>
+
+            <Style Selector="ComboBox">
+              <Setter Property="Width" Value="174"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+            </Style>
+
+            <Style Selector="TextBox">
+              <Setter Property="Width" Value="64"/>
+              <Setter Property="Height" Value="24"/>
+              <Setter Property="MinHeight" Value="24"/>
+              <Setter Property="CornerRadius" Value="0"/>
+              <Setter Property="Padding" Value="8,0,0,0"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style Selector="Button">
+              <Setter Property="FontSize" Value="11"/>
+              <Setter Property="FontFamily" Value="Consolas"/>
+              <Setter Property="HorizontalContentAlignment" Value="Center"/>
+              <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            </Border.Styles>
+          <Grid ColumnDefinitions="*,24,*">
+            <StackPanel Grid.Column="0" Spacing="0">
+              <TextBlock Text="Theme color"
+                         Margin="0,0,0,0"
+                         VerticalAlignment="Center"/>
+              <ComboBox ItemsSource="{Binding ThemeOptions}"
+                        SelectedIndex="{Binding SelectedThemeIndex, Mode=TwoWay}"
+                        Width="200"/>
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="0">
+                <TextBlock Text="Audio Output Device"/>
+
+                <TextBlock Margin="0,4,0,0" Opacity="0.8"
+                           Text="{Binding AudioOutStatus}"/>
+
+                <Grid ColumnDefinitions="Auto,Auto,*"
+                      RowDefinitions="Auto,Auto">
+
+                  <ComboBox Grid.Row="0" Grid.Column="2"
+                            ItemsSource="{Binding AudioOutOptions}"
+                            SelectedItem="{Binding SelectedAudioOut, Mode=TwoWay}"
+                            Width="200"
+                            DisplayMemberBinding="{Binding Name}" />
+                </Grid>
+              </StackPanel>
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="0">
+                <TextBlock Text="MIDI Input Device"/>
+
+                <TextBlock Margin="0,4,0,0" Opacity="0.8"
+                           Text="{Binding MidiInStatus}"/>
+
+                <Grid ColumnDefinitions="Auto,Auto,*"
+                      RowDefinitions="Auto,Auto">
+
+                  <ComboBox Grid.Row="0" Grid.Column="2"
+                            ItemsSource="{Binding MidiInOptions}"
+                            SelectedItem="{Binding SelectedMidiIn, Mode=TwoWay}"
+                            Width="200"
+                            DisplayMemberBinding="{Binding Name}" />
+                </Grid>
+              </StackPanel>
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="4">
+                <TextBlock Text="Output"/>
+                <ToggleSwitch IsChecked="{Binding IsMonoOutput, Mode=TwoWay}"
+                              OnContent="Mono"
+                              OffContent="Stereo"
+                              HorizontalAlignment="Left"/>
+              </StackPanel>
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="4">
+                <TextBlock Text="MIDI Reset"/>
+                <Button Content="Reset"
+                        Width="60"
+                        HorizontalAlignment="Left"
+                        Click="OnMidiResetClicked"/>
+              </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Spacing="0">
+              <TextBlock Text="Buffer Size"/>
+              <ComboBox ItemsSource="{Binding AudioBufferSizeOptions}"
+                        SelectedItem="{Binding SelectedAudioBufferSize, Mode=TwoWay}"
+                        Width="200"
+                        DisplayMemberBinding="{Binding Name}" />
+
+              <Separator Margin="0,12,0,12"/>
+
+              <TextBlock Text="Playback Sample Rate"/>
+              <ComboBox ItemsSource="{Binding AudioSampleRateOptions}"
+                        SelectedItem="{Binding SelectedAudioSampleRate, Mode=TwoWay}"
+                        Width="200"
+                        DisplayMemberBinding="{Binding Name}" />
+
+              <Separator Margin="0,12,0,12"/>
+
+              <TextBlock Text="Render FPS"/>
+              <ComboBox ItemsSource="{Binding RenderFpsOptions}"
+                        SelectedItem="{Binding SelectedRenderFps, Mode=TwoWay}"
+                        Width="200"
+                        DisplayMemberBinding="{Binding Name}" />
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="4">
+                <TextBlock Text="Master Meter Decay"/>
+                <Grid ColumnDefinitions="200,8,Auto">
+                  <Slider Grid.Column="0"
+                          Minimum="0" Maximum="200"
+                          SmallChange="0.1"
+                          LargeChange="25"
+                          Value="{Binding MasterMeterDecayMs, Mode=TwoWay}"/>
+                  <TextBlock Grid.Column="2"
+                             Text="{Binding MasterMeterDecayMsText}"
+                             VerticalAlignment="Center"/>
+                </Grid>
+              </StackPanel>
+
+              <Separator Margin="0,12,0,12"/>
+
+              <StackPanel Spacing="4">
+                <TextBlock Text="Mixer Meter Decay"/>
+                <Grid ColumnDefinitions="200,8,Auto">
+                  <Slider Grid.Column="0"
+                          Minimum="0" Maximum="200"
+                          SmallChange="0.1"
+                          LargeChange="25"
+                          Value="{Binding MixerMeterDecayMs, Mode=TwoWay}"/>
+                  <TextBlock Grid.Column="2"
+                             Text="{Binding MixerMeterDecayMsText}"
+                             VerticalAlignment="Center"/>
+                </Grid>
+              </StackPanel>
+            </StackPanel>
+          </Grid>
+        </Border>
+      </TabItem>
+
+    </TabControl>
+
+    <StackPanel Grid.Row="0"
+                Grid.RowSpan="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0,32,18,0"
+                Spacing="0">
+
+      <ctrl:MasterLevelMeter Width="220"
+                             Height="12"
+                             Level="{Binding MasterMeterLevelL}"
+                             Peak="{Binding MasterMeterPeakL}"
+                             IsClipped="{Binding MasterMeterClipL}"/>
+      <ctrl:MasterLevelMeter Width="220"
+                       Height="12"
+                       Level="{Binding MasterMeterLevelR}"
+                       Peak="{Binding MasterMeterPeakR}"
+                       IsClipped="{Binding MasterMeterClipR}"/>
+
+      <Slider Width="220"
+              Height="24"
+              Minimum="0" Maximum="1"
+              Value="{Binding MasterVolume, Mode=TwoWay}"
+              SmallChange="0.01"
+              LargeChange="0.05"
+              Classes="smallThumb"/>
+    </StackPanel>
+    
+    <Border Grid.Row="2"
+            Margin="0,4,0,0"
+            Padding="8,2"
+            Background="{DynamicResource StatusBarBackgroundBrush}">
+      <Grid ColumnDefinitions="*,Auto"
+            ColumnSpacing="8">
+        <TextBlock Grid.Column="0"
+                   Text="{Binding LeftStatusMessage}"
+                   FontFamily="Consolas"
+                   FontSize="11"
+                   Foreground="{DynamicResource StatusBarForegroundBrush}"
+                   TextAlignment="Left"
+                   TextTrimming="CharacterEllipsis"
+                   VerticalAlignment="Center"/>
+        <Border Grid.Column="1"
+                Width="560"
+                ClipToBounds="True"
+                HorizontalAlignment="Right">
+          <TextBlock Text="{Binding RightStatusMessageDisplay}"
+                     FontFamily="Consolas"
+                     FontSize="11"
+                     Foreground="{DynamicResource StatusBarForegroundBrush}"
+                     TextAlignment="Right"
+                     TextTrimming="CharacterEllipsis"
+                     Opacity="{Binding RightStatusOpacity}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Right">
+            <TextBlock.RenderTransform>
+              <TranslateTransform X="{Binding RightStatusOffset}"/>
+            </TextBlock.RenderTransform>
+          </TextBlock>
+        </Border>
+      </Grid>
+    </Border>
+
+    <Border Grid.Row="3" Padding="0,0,0,0">
+      <ctrl:PianoKeyboard x:Name="Piano"
+                          MinNote="{Binding PianoMinNote}"
+                          MaxNote="{Binding PianoMaxNote}"
+                          ChannelBrushes="{Binding PianoChannelBrushes}"
+                          ActiveNoteChannelMasks="{Binding PianoNoteChannelMasks}"
+                          Height="64"/>
+    </Border>
+
+  </Grid>
 </Window>

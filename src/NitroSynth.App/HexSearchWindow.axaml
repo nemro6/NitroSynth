@@ -1,0 +1,113 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="NitroSynth.App.HexSearchWindow"
+        x:CompileBindings="False"
+        Width="420"
+        Height="360"
+        MinWidth="420"
+        MinHeight="360"
+        Title="Find">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+
+    <Style Selector="TextBlock.searchLabel">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style Selector="Border.searchGroup">
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
+      <Setter Property="Padding" Value="8"/>
+      <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+
+    <Style Selector="Button.searchAction">
+      <Setter Property="Width" Value="100"/>
+      <Setter Property="Height" Value="28"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+    </Style>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+          ColumnDefinitions="*,Auto"
+          RowSpacing="8"
+          ColumnSpacing="12">
+      <TextBlock Grid.Row="0"
+                 Grid.Column="0"
+                 Classes="searchLabel"
+                 Text="Search Data"/>
+      <TextBox x:Name="SearchDataBox"
+               Grid.Row="1"
+               Grid.Column="0"
+               HorizontalAlignment="Stretch"
+               KeyDown="OnSearchDataKeyDown"/>
+
+      <Border Grid.Row="2"
+              Grid.Column="0"
+              Classes="searchGroup">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="searchLabel" Text="Search Method"/>
+          <StackPanel Orientation="Horizontal" Spacing="16">
+            <RadioButton x:Name="BigEndianRadio" Content="Big Endian"/>
+            <RadioButton x:Name="LittleEndianRadio" Content="Little Endian"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Row="3"
+              Grid.Column="0"
+              Classes="searchGroup">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="searchLabel" Text="Data Type"/>
+          <StackPanel Orientation="Horizontal" Spacing="24">
+            <RadioButton x:Name="DataHexRadio" Content="Hex Data"/>
+            <RadioButton x:Name="DataTextRadio" Content="Text"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Row="4"
+              Grid.Column="0"
+              Classes="searchGroup">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="searchLabel" Text="Search Scope"/>
+          <RadioButton x:Name="RangeFromCursorRadio" Content="From Cursor"/>
+          <RadioButton x:Name="RangeAllRadio" Content="Whole Data"/>
+          <RadioButton x:Name="RangeSelectionRadio" Content="Selection"/>
+        </StackPanel>
+      </Border>
+
+      <StackPanel Grid.Row="1"
+                  Grid.RowSpan="4"
+                  Grid.Column="1"
+                  Spacing="8"
+                  VerticalAlignment="Top">
+        <Button Classes="searchAction"
+                Content="Find Prev"
+                Click="OnSearchPreviousClicked"/>
+        <Button Classes="searchAction"
+                Content="Find Next"
+                Click="OnSearchNextClicked"/>
+        <Button Classes="searchAction"
+                Content="Close"
+                Click="OnCloseClicked"/>
+        <Button Classes="searchAction"
+                Content="Match List"
+                Click="OnListMatchesClicked"/>
+      </StackPanel>
+
+      <TextBlock x:Name="StatusText"
+                 Grid.Row="5"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="2"
+                 Classes="searchLabel"/>
+    </Grid>
+  </Border>
+</Window>
+

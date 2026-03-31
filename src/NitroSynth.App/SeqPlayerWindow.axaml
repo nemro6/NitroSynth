@@ -1,0 +1,83 @@
+﻿<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="NitroSynth.App.SeqPlayerWindow"
+    Width="520"
+    Height="380"
+    MinWidth="520"
+    MinHeight="380"
+    Title="{Binding Title}"
+    x:CompileBindings="False">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+    <Style Selector="TextBlock">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+    </Style>
+    <Style Selector="CheckBox">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="Margin" Value="0,0,8,8"/>
+      <Setter Property="MinWidth" Value="52"/>
+    </Style>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto"
+          RowSpacing="8">
+      <TextBlock Classes="editorTitle"
+                 Text="Sequence Player Settings"/>
+
+      <Grid Grid.Row="1"
+            ColumnDefinitions="Auto,*"
+            RowDefinitions="Auto,Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Label" Margin="0,6"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlayerDisplay}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="MaxSequence" Margin="0,6"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MaxSequenceDisplay}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="HeapSize" Margin="0,6"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding HeapSizeDisplay}" IsReadOnly="True"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="ChannelBitFlags" Margin="0,6"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ChannelBitflagsHex}" IsReadOnly="True"/>
+      </Grid>
+
+      <TextBlock Grid.Row="2"
+                 Text="Channel Flags (00-15)"/>
+
+      <Border Grid.Row="3"
+              Padding="8"
+              BorderThickness="1"
+              BorderBrush="{DynamicResource Editor.BorderBrush}">
+        <ItemsControl ItemsSource="{Binding ChannelFlags}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <CheckBox Content="{Binding Label}"
+                        IsChecked="{Binding IsChecked}"
+                        IsHitTestVisible="False"
+                        Focusable="False"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </Border>
+
+      <StackPanel Grid.Row="4"
+                  Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  Spacing="8">
+        <Button Content="Close"
+                Click="OnCloseClicked"
+                MinWidth="96"/>
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
+

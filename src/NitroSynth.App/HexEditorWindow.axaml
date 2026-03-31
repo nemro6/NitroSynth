@@ -1,0 +1,168 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="NitroSynth.App.HexEditorWindow"
+        x:CompileBindings="False"
+        Width="660"
+        Height="460"
+        MinWidth="600"
+        MinHeight="360"
+        Title="HEX Editor">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+
+    <Style Selector="TextBlock.hexHeadLabel">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style Selector="TextBox.hexEditor">
+      <Setter Property="Height" Value="NaN"/>
+      <Setter Property="MinHeight" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="AcceptsReturn" Value="True"/>
+      <Setter Property="TextWrapping" Value="NoWrap"/>
+      <Setter Property="IsUndoEnabled" Value="False"/>
+      <Setter Property="VerticalContentAlignment" Value="Top"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="LineHeight" Value="16"/>
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style Selector="TextBox.hexSide">
+      <Setter Property="Height" Value="NaN"/>
+      <Setter Property="MinHeight" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="AcceptsReturn" Value="True"/>
+      <Setter Property="TextWrapping" Value="NoWrap"/>
+      <Setter Property="IsReadOnly" Value="True"/>
+      <Setter Property="IsTabStop" Value="False"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="IsHitTestVisible" Value="False"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="VerticalContentAlignment" Value="Top"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="LineHeight" Value="16"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+      <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+
+    <Style Selector="Button.hexTool">
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="MinHeight" Value="24"/>
+      <Setter Property="MinWidth" Value="56"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="Padding" Value="8,0"/>
+    </Style>
+
+    <Style Selector="TextBox.hexTool">
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="MinHeight" Value="24"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="6,0"/>
+    </Style>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,*,Auto"
+          RowSpacing="4">
+      <StackPanel Orientation="Horizontal"
+                  Spacing="6">
+        <TextBlock VerticalAlignment="Center"
+                   Text="Addr"/>
+        <TextBox x:Name="JumpAddressBox"
+                 Classes="hexTool"
+                 Width="88"
+                 Watermark="hex"
+                 KeyDown="OnJumpAddressKeyDown"/>
+        <Button Classes="hexTool"
+                Content="JUMP"
+                Click="OnJumpClicked"/>
+
+        <Button Classes="hexTool"
+                Content="FIND"
+                Click="OnOpenFindClicked"/>
+      </StackPanel>
+
+      <Border Grid.Row="1"
+              BorderThickness="1"
+              BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+              Padding="2">
+        <Grid RowDefinitions="Auto,*"
+              RowSpacing="2"
+              ColumnDefinitions="60,8,352,8,128"
+              HorizontalAlignment="Left">
+          <TextBlock Grid.Row="0"
+                     Grid.Column="0"
+                     Classes="hexHeadLabel"
+                     Text="Offset"/>
+          <TextBlock Grid.Row="0"
+                     Grid.Column="2"
+                     Classes="hexHeadLabel"
+                     Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F"/>
+          <TextBlock Grid.Row="0"
+                     Grid.Column="4"
+                     Classes="hexHeadLabel"
+                     Text="Decoded Text"/>
+
+          <ScrollViewer Grid.Row="1"
+                        Grid.ColumnSpan="5"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+            <Grid ColumnDefinitions="60,8,352,8,128"
+                  HorizontalAlignment="Left">
+              <TextBox x:Name="OffsetTextEditor"
+                       Grid.Column="0"
+                       Classes="hexSide"/>
+              <TextBox x:Name="HexTextEditor"
+                       Grid.Column="2"
+                       Classes="hexEditor"
+                       IsReadOnly="True"
+                       KeyDown="OnHexEditorKeyDown"/>
+              <TextBox x:Name="DecodedTextEditor"
+                       Grid.Column="4"
+                       Classes="hexSide"/>
+            </Grid>
+          </ScrollViewer>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Row="2"
+            ColumnDefinitions="*,Auto,Auto,Auto"
+            ColumnSpacing="8">
+        <TextBlock x:Name="StatusText"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"/>
+        <TextBlock x:Name="ByteCountText"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Text="0 bytes"/>
+        <Button x:Name="SaveButton"
+                Grid.Column="2"
+                Content="SAVE"
+                MinWidth="88"
+                Click="OnSaveClicked"/>
+        <Button Grid.Column="3"
+                Content="CLOSE"
+                MinWidth="88"
+                Click="OnCloseClicked"/>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
+

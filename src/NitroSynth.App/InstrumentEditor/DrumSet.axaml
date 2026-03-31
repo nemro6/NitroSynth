@@ -1,0 +1,80 @@
+﻿<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="NitroSynth.App.InstrumentEditor.DrumSet"
+    Width="780" Height="540"
+    Title="{Binding Title}"
+    x:CompileBindings="False">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+      <TextBlock Classes="editorTitle"
+                 Text="Drum Set (10h) - Key Assignments"/>
+
+      <Grid Grid.Row="1" ColumnDefinitions="Auto,8,Auto,24,Auto,8,Auto" Margin="0,12,0,8">
+        <TextBlock Grid.Column="0" Text="LowNote" VerticalAlignment="Center"/>
+
+        <NumericUpDown Grid.Column="2"
+                       Minimum="0" Maximum="127"
+                       Increment="1" FormatString="F0"
+                       Width="120"
+                       Value="{Binding LowNoteValue, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Column="4" Text="HighNote" VerticalAlignment="Center"/>
+
+        <NumericUpDown Grid.Column="6"
+                       Minimum="0" Maximum="127"
+                       Increment="1" FormatString="F0"
+                       Width="120"
+                       Value="{Binding HighNoteValue, Mode=TwoWay}"/>
+      </Grid>
+
+      <Separator Grid.Row="2" Margin="0,4,0,8"/>
+
+      <DataGrid Grid.Row="3"
+                ItemsSource="{Binding Entries}"
+                AutoGenerateColumns="False"
+                IsReadOnly="False"
+                GridLinesVisibility="All"
+                CanUserSortColumns="False"
+                CanUserResizeColumns="True"
+                CanUserReorderColumns="False">
+
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=TwoWay}" Width="70"/>
+
+          <DataGridTemplateColumn Header="Type" Width="160">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding SelectedTypeLabel}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+            <DataGridTemplateColumn.CellEditingTemplate>
+              <DataTemplate>
+                <ComboBox ItemsSource="{Binding TypeOptions}"
+                          SelectedIndex="{Binding SelectedType, Mode=TwoWay}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellEditingTemplate>
+          </DataGridTemplateColumn>
+
+          <DataGridTextColumn Header="swavID" Binding="{Binding SwavId, Mode=TwoWay}" Width="90"/>
+          <DataGridTextColumn Header="swarID" Binding="{Binding SwarId, Mode=TwoWay}" Width="90"/>
+          <DataGridTextColumn Header="Attack" Binding="{Binding Attack, Mode=TwoWay}" Width="70"/>
+          <DataGridTextColumn Header="Decay" Binding="{Binding Decay, Mode=TwoWay}" Width="70"/>
+          <DataGridTextColumn Header="Sustain" Binding="{Binding Sustain, Mode=TwoWay}" Width="80"/>
+          <DataGridTextColumn Header="Release" Binding="{Binding Release, Mode=TwoWay}" Width="80"/>
+          <DataGridTextColumn Header="Pan" Binding="{Binding Pan, Mode=TwoWay}" Width="60"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+        <Button Content="Close" Click="OnCloseClicked" MinWidth="96"/>
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
+

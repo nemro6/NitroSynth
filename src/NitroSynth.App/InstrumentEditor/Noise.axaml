@@ -1,0 +1,54 @@
+﻿<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="NitroSynth.App.InstrumentEditor.Noise"
+    Width="520" Height="420"
+    Title="{Binding Title}"
+    x:CompileBindings="False">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,*,Auto">
+      <TextBlock Classes="editorTitle"
+                 Text="Noise (03h) Instrument - Articulation Data"/>
+
+      <Grid Grid.Row="1"
+            ColumnDefinitions="Auto,*"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            Margin="0,12,0,12">
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="(unused)" Margin="0,6"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SwavHex}" IsEnabled="False"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="(unused)" Margin="0,6"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SwarHex}" IsEnabled="False"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="BaseKey (60=C4)" Margin="0,6"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding BaseKey, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Attack Rate" Margin="0,6"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AttackRate, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Decay Rate" Margin="0,6"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DecayRate, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Sustain Level" Margin="0,6"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SustainLevel, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Release Rate" Margin="0,6"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ReleaseRate, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Pan (64=center)" Margin="0,6"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Pan, Mode=TwoWay}"/>
+      </Grid>
+
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Content="Close" Click="OnCloseClicked" MinWidth="96"/>
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
+

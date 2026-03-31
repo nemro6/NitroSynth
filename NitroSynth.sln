@@ -5,23 +5,35 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3B117E6-B6F6-40A3-8C6D-20FA44150DC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSynth.App", "src\NitroSynth.App\NitroSynth.App.csproj", "{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSynth.App", "src\NitroSynth.App\NitroSynth.app.csproj", "{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroSynth.Tests", "tests\NitroSynth.Tests\NitroSynth.Tests.csproj", "{0A4A640D-0A8B-4109-88CC-C706320E21D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A4A640D-0A8B-4109-88CC-C706320E21D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A4A640D-0A8B-4109-88CC-C706320E21D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A4A640D-0A8B-4109-88CC-C706320E21D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A4A640D-0A8B-4109-88CC-C706320E21D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9C2902CC-C2A0-431E-B6F0-74C86A58ACB5} = {A3B117E6-B6F6-40A3-8C6D-20FA44150DC4}
+		{0A4A640D-0A8B-4109-88CC-C706320E21D2} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {485F6021-844C-46D4-93DA-4EAA355C7CC2}
 	EndGlobalSection
 EndGlobal

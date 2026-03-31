@@ -1,9 +1,39 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="NitroSynth.App.App"
-             RequestedThemeVariant="Default">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+﻿<Application
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avares="https://github.com/avaloniaui"
+    x:Class="NitroSynth.App.App"
+    RequestedThemeVariant="Dark">
+
+  <Application.Resources>
+    <ResourceDictionary>
+
+      <SolidColorBrush x:Key="MeterTrackBrush" Color="#333333"/>
+      <SolidColorBrush x:Key="MeterBorderBrush" Color="#404040"/>
+      <SolidColorBrush x:Key="MeterFillBrush" Color="#2FBF2F"/>
+      <SolidColorBrush x:Key="MeterPulseBrush" Color="#7CFF7C"/>
+
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="MeterTrackBrush" Color="#F0F0F0"/>
+          <SolidColorBrush x:Key="MeterBorderBrush" Color="#C0C0C0"/>
+          <SolidColorBrush x:Key="MeterFillBrush" Color="#2FBF2F"/>
+          <SolidColorBrush x:Key="MeterPulseBrush" Color="#2FBF2F"/>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="MeterTrackBrush" Color="#333333"/>
+          <SolidColorBrush x:Key="MeterBorderBrush" Color="#404040"/>
+          <SolidColorBrush x:Key="MeterFillBrush" Color="#2FBF2F"/>
+          <SolidColorBrush x:Key="MeterPulseBrush" Color="#7CFF7C"/>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+  </Application.Styles>
 </Application>

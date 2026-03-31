@@ -1,0 +1,36 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:NitroSynth.App.ViewModels"
+        x:Class="NitroSynth.App.SdatInfoWindow"
+        x:CompileBindings="False"
+        Width="720" Height="420"
+        Title="SDAT Information">
+  <Border Padding="16">
+    <StackPanel Spacing="8">
+      <TextBlock Text="SDAT Information" FontSize="18" FontWeight="SemiBold"/>
+      <TextBlock Text="{Binding FileDisplayPath, TargetNullValue='(Not loaded)'}"/>
+      <TextBlock Text="{Binding SdatSize, StringFormat=Size: {0:N0} bytes}"/>
+      <TextBlock Text="{Binding SdatVersion, StringFormat=Version: v{0}}"/>
+
+      <Separator/>
+      <TextBlock Text="Blocks" FontWeight="Bold"/>
+
+      <DataGrid ItemsSource="{Binding Blocks}"
+                AutoGenerateColumns="False"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="True"
+                HeadersVisibility="Column"
+                GridLinesVisibility="All"
+                Height="260">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Name"        Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Offset"      Binding="{Binding OffsetHex}"/>
+          <DataGridTextColumn Header="Size"        Binding="{Binding SizeHex}"/>
+          <DataGridTextColumn Header="Offset(dec)" Binding="{Binding OffsetDec}"/>
+          <DataGridTextColumn Header="Size(dec)"   Binding="{Binding SizeDec}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </StackPanel>
+  </Border>
+</Window>
+

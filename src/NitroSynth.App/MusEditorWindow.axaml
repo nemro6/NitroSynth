@@ -1,0 +1,66 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="NitroSynth.App.MusEditorWindow"
+        x:CompileBindings="False"
+        Width="900"
+        Height="620"
+        MinWidth="700"
+        MinHeight="420"
+        Title="MUS Editor">
+
+  <Window.Styles>
+    <StyleInclude Source="avares://NitroSynth.App/InstrumentEditor/EditorTheme.axaml"/>
+
+    <Style Selector="TextBlock.musHeader">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="Opacity" Value="0.9"/>
+    </Style>
+
+    <Style Selector="TextBox.musEditor">
+      <Setter Property="Height" Value="NaN"/>
+      <Setter Property="MinHeight" Value="0"/>
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="AcceptsReturn" Value="True"/>
+      <Setter Property="TextWrapping" Value="NoWrap"/>
+      <Setter Property="IsUndoEnabled" Value="True"/>
+      <Setter Property="VerticalContentAlignment" Value="Top"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="6,4,6,4"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+    </Style>
+  </Window.Styles>
+
+  <Border Classes="editorRoot">
+    <Grid RowDefinitions="Auto,*,Auto"
+          RowSpacing="6">
+      <TextBlock x:Name="HeaderText"
+                 Classes="musHeader"/>
+
+      <TextBox Grid.Row="1"
+               x:Name="MusTextEditor"
+               Classes="musEditor"/>
+
+      <Grid Grid.Row="2"
+            ColumnDefinitions="*,Auto,Auto"
+            ColumnSpacing="8">
+        <TextBlock x:Name="StatusText"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"/>
+        <Button x:Name="SaveButton"
+                Grid.Column="1"
+                Content="SAVE"
+                MinWidth="88"
+                Click="OnSaveClicked"/>
+        <Button Grid.Column="2"
+                Content="CLOSE"
+                MinWidth="88"
+                Click="OnCloseClicked"/>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
+

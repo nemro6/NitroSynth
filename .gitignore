@@ -8,5 +8,9 @@ obj/
 .DS_Store
 .idea/
 .vscode/
+.vs/
 *.swp
 *.tmp
+artifacts/
+.artifacts/
+**/artifacts/
